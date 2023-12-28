@@ -1,10 +1,10 @@
 ---
-- name: yum - Add repositiory key
+- name: Yum - Add repositiory key
   ansible.builtin.rpm_key:
     state: present
     key: "{{ influxdb_repos_key_url }}"
 
-- name: yum - Add repository to list
+- name: Yum - Add repository to list
   ansible.builtin.yum_repository:
     state: present
     name: influxdb
