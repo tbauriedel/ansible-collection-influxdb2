@@ -1,3 +1,5 @@
+![Lint](https://github.com/tbauriedel/ansible-collection-influxdb/actions/workflows/yamllint.yml/badge.svg)
+
 > **Note:** Collection is work in progress
 
 # ansible-collection-influxdb
@@ -16,5 +18,5 @@ It was created with the aim of refreshing my Ansible knowledge and getting in to
 
 ## Roles
 
-* repos
-* influxdb
+* [Role: repos](roles/repos/README.md) (add repositories)
+* [Role: influxdb](roles/influxdb/README.md) (install and configure influxdb)
