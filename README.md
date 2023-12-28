@@ -8,7 +8,6 @@ The collection is still at a very experimental stage and is growing bit by bit a
 
 It was created with the aim of refreshing my Ansible knowledge and getting in touch with Collections. Any hints for improvements are therefore welcome.
 
-
 ## Supported systems
 | Distribution | Tested on |
 |--------------|-----------|

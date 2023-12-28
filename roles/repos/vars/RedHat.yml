@@ -1,2 +1,2 @@
 ---
-influxdb_repo_stable_baseurl: "https://repos.influxdata.com/rhel/$releasever/$basearch/stable"
+influxdb_repos_stable_baseurl: "https://repos.influxdata.com/rhel/$releasever/$basearch/stable"

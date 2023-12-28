@@ -1,10 +1,10 @@
 ---
-- name: apt - Add repositiory key
+- name: Apt - Add repositiory key
   ansible.builtin.apt_key:
     state: present
-    url: "{{ influxdb_repo_key_url }}"
+    url: "{{ influxdb_repos_key_url }}"
 
-- name: apt - Add repository to list
+- name: Apt - Add repository to list
   ansible.builtin.apt_repository:
-    repo: "{{ influxdb_repo_stable }}"
+    repo: "{{ influxdb_repos_stable }}"
     state: present
