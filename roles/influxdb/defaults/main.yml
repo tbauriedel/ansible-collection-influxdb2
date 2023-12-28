@@ -1,0 +1,9 @@
+---
+influxdb_influxdb_packages:
+  - influxdb2
+  - influxdb2-cli
+
+influxdb_influxdb_bolt_path: /var/lib/influxdb/influxd.bolt
+influxdb_influxdb_engine_path: /var/lib/influxdb/engine
+
+influxdb_influxdb_extra_config: ""
