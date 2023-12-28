@@ -5,6 +5,6 @@
     url: "{{ influxdb_repo_key_url }}"
 
 - name: apt - Add repository to list
-  ansible.builtin.apt_repository: 
-    repo: "{{ influxdb_repo_stable }}" 
+  ansible.builtin.apt_repository:
+    repo: "{{ influxdb_repo_stable }}"
     state: present

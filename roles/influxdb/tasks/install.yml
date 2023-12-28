@@ -1,0 +1,15 @@
+---
+- name: Ensure InfluxDB packages are installed
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ influxdb_influxdb_packages }}"
+  notify: Restart InfluxDB
+
+- name: Ensure startup config is there
+  ansible.builtin.template:
+    src: config.toml.j2
+    dest: /etc/influxdb/config.toml
+    mode: 0644
+    owner: root
+    group: root

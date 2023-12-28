@@ -4,3 +4,4 @@
 
   roles:
     - repos
+    - influxdb
