@@ -1,5 +1,18 @@
-> **Note:** Work in progress
+> **Note:** Collection is work in progress
 
 # ansible-collection-influxdb
 
-Install and configure InfluxDB
+Collection to manage InfluxDB repository and setup.
+
+It was created with the aim of refreshing my Ansible knowledge and getting in touch with Collections. Any hints for improvements are therefore welcome.
+
+## Supported systems
+| Distribution | Tested on |
+|--------------|-----------|
+| Ubuntu       | 22.04     |
+| Centos       | 9 Stream  |
+
+## Roles
+
+* repos
+* influxdb (TODO)
