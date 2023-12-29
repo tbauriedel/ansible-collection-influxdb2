@@ -9,6 +9,7 @@ At the moment the configuration is very basic. Over time, this role will be expa
 
 * `influxdb_influxdb_bolt_path`: InfluxDB bolt-path
 * `influxdb_influxdb_engine_path`: InfluxDB engine-path
+* `influxdb_influxdb_extra_config`: Extra configuration
 
 Defaults can be viewed in vars/defaults.yml
 
