@@ -4,7 +4,8 @@
 
 # ansible-collection-influxdb
 
-Collection to manage InfluxDB repository and setup.
+Ansible collection to manage [InfluxDB](https://www.influxdata.com/) repository and setup.  
+Read more about InfluxDB in the [official documentation](https://docs.influxdata.com/influxdb/v2/).
 
 The collection is still at a very experimental stage and is growing bit by bit according to my use cases. New configuration options will be implemented when they are needed. If you already have requests, please let me know via issue (or pull request).
 
