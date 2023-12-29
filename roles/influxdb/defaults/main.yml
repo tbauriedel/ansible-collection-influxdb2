@@ -7,3 +7,11 @@ influxdb_influxdb_bolt_path: /var/lib/influxdb/influxd.bolt
 influxdb_influxdb_engine_path: /var/lib/influxdb/engine
 
 influxdb_influxdb_extra_config: ""
+
+influxdb_influxdb_host: http://localhost:8086
+influxdb_influxdb_primary_user:
+  name: admin
+  password: ChangeMe123!
+influxdb_influxdb_primary_org: default
+influxdb_influxdb_primary_bucket: default
+influxdb_influxdb_retention: 0

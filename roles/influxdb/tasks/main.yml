@@ -11,3 +11,6 @@
 
 - name: Include installation
   ansible.builtin.include_tasks: install.yml
+
+- name: Include setup
+  ansible.builtin.include_tasks: setup.yml

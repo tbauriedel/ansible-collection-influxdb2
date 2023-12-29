@@ -13,3 +13,8 @@
     mode: 0644
     owner: root
     group: root
+
+- name: Ensure InfluxDB is started
+  ansible.builtin.service:
+    name: influxdb
+    state: started

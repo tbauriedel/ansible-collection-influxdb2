@@ -1,0 +1,17 @@
+---
+- name: Ensure InfluxDB is set up
+  ansible.builtin.command: influx setup \
+      --host "{{ influxdb_influxdb_host }}" \
+      --username "{{ influxdb_influxdb_primary_user.name }}" \
+      --password "{{ influxdb_influxdb_primary_user.password }}" \
+      --org "{{ influxdb_influxdb_primary_org }}" \
+      --bucket "{{ influxdb_influxdb_primary_bucket }}" \
+      --retention "{{ influxdb_influxdb_retention }}" \
+      --force
+  register: _influx_setup
+  failed_when:
+    - _influx_setup.rc != 0
+    - '"has already been set up" not in _influx_setup.stderr'
+  changed_when: _influx_setup.rc == 0
+
+# TODO add handling for orgs, buckets, etc.
