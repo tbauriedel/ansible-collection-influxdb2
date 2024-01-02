@@ -1,0 +1,2 @@
+# ansible collections
+# - community.general

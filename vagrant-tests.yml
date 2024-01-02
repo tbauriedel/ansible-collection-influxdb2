@@ -1,6 +1,21 @@
 ---
 - hosts: all
   become: true
+  vars:
+    influxdb_influxdb_admin_token: 12345678abcdefg
+    influxdb_influxdb_buckets:
+      - name: foobar1
+        state: absent
+        org: default
+        token: "{{ influxdb_influxdb_admin_token }}"
+        host: "{{ influxdb_influxdb_host }}"
+        retention:
+          type: 'expire'
+          everySeconds: 50000
+          shardGroupDurationSeconds: 0
+
+  collections:
+    tbauriedel.influxdb
 
   roles:
     - repos

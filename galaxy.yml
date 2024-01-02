@@ -1,0 +1,17 @@
+namespace: tbauriedel
+name: influxdb
+version: 0.0.0
+readme: README.md
+authors:
+  - Tobias Bauriedel <tobias@bauriedel.de>
+description: >
+  This collection manages InfluxDB components.
+  Including the official repositories, installation and configuration.
+license:
+  - Apache-2.0
+tags:
+  - collection
+  - influxdb
+  - metrics
+dependencies: {}
+repository: https://github.com/tbauriedel/ansible-collection-influxdb

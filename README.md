@@ -11,13 +11,39 @@ The collection is still at a very experimental stage and is growing bit by bit a
 
 It was created with the aim of refreshing my Ansible knowledge and getting in touch with Collections. Any hints for improvements are therefore welcome.
 
+## Roles
+
+* [Role: repos](roles/repos/README.md) - Install the official InfluxDb repositories
+* [Role: influxdb](roles/influxdb/README.md) - Install and configure InfluxDB
+
+## Example
+
+```
+- hosts: all
+  become: true
+  vars:
+    influxdb_influxdb_admin_token: 12345678abcdefg
+    influxdb_influxdb_buckets:
+      - name: foobar1
+        state: absent
+        org: default
+        token: "{{ influxdb_influxdb_admin_token }}"
+        host: "{{ influxdb_influxdb_host }}"
+        retention:
+          type: 'expire'
+          everySeconds: '50000'
+          shardGroupDurationSeconds: '0'
+
+  collections:
+    tbauriedel.influxdb
+
+  roles:
+    - repos
+    - influxdb
+```
+
 ## Supported systems
 | Distribution | Tested on |
 |--------------|-----------|
 | Ubuntu       | 22.04     |
 | Centos       | 9 Stream  |
-
-## Roles
-
-* [Role: repos](roles/repos/README.md) (add repositories)
-* [Role: influxdb](roles/influxdb/README.md) (install and configure influxdb)

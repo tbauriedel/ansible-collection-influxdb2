@@ -8,6 +8,7 @@ Vagrant.configure("2") do |config|
     ubuntu.vm.network "forwarded_port", guest: 8086, host: 8086
     ubuntu.vm.provision "ansible" do |ansible|
       ansible.playbook = "vagrant-tests.yml"
+#      ansible.verbose = "vvv"
     end
   end
 
@@ -17,6 +18,7 @@ Vagrant.configure("2") do |config|
     centos.vm.network "forwarded_port", guest: 8086, host: 8087
     centos.vm.provision "ansible" do |ansible|
       ansible.playbook = "vagrant-tests.yml"
+#      ansible.verbose = "vvv"
     end
   end
 end
