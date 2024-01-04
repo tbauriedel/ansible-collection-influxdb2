@@ -1,4 +1,9 @@
 ---
+- name: Ensure admin setup token is definded
+  ansible.builtin.fail:
+    msg: Variable influxdb_influxdb_admin_token is not defined in variables
+  when: influxdb_influxdb_admin_token == ""
+
 - name: Ensure InfluxDB is set up
   ansible.builtin.command: influx setup \
       --host "{{ influxdb_influxdb_host }}" \
@@ -7,6 +12,7 @@
       --org "{{ influxdb_influxdb_primary_org }}" \
       --bucket "{{ influxdb_influxdb_primary_bucket }}" \
       --retention "{{ influxdb_influxdb_retention }}" \
+      --token "{{ influxdb_influxdb_admin_token }}" \
       --force
   register: _influx_setup
   failed_when:
@@ -15,3 +21,15 @@
   changed_when: _influx_setup.rc == 0
 
 # TODO add handling for orgs, buckets, etc.
+- name: Organize buckets
+  tbauriedel.influxdb.organize_bucket:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    org: "{{ item.org }}"
+    token: "{{ item.token }}"
+    host: "{{ influxdb_influxdb_host }}"
+    retention:
+      type: "{{ item.retention.type }}"
+      everySeconds: "{{ item.retention.everySeconds }}"
+      shardGroupDurationSeconds: "{{ item.retention.shardGroupDurationSeconds }}"
+  loop: "{{ influxdb_influxdb_buckets }}"
