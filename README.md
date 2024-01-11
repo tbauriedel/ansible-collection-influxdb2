@@ -43,7 +43,7 @@ It was created with the aim of refreshing my Ansible knowledge and getting in to
 ```
 
 ## Supported systems
-| Distribution | Tested on |
-|--------------|-----------|
-| Ubuntu       | 22.04     |
-| Centos       | 9 Stream  |
+| Distribution | Tested on    |
+|--------------|--------------|
+| Ubuntu       | 22.04        |
+| Centos       | 7            |
