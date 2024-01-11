@@ -15,7 +15,7 @@
           shardGroupDurationSeconds: 0
 
   collections:
-    tbauriedel.influxdb
+    - tbauriedel.influxdb
 
   roles:
     - repos
