@@ -1,103 +1,70 @@
+"""InfluxDB v2 API utilites"""
 #!/usr/bin/python3
 
 import json
 import requests
 
-class InfluxApi():
+class Influx2Api:
     '''
     Common api requests to for InfluxDBv2
     '''
-    def get_bucket_status(module):
+
+    api_token: str
+    endpoint: str
+    timeout: int
+
+    def __init__(self, token, host) -> None:
         '''
-        Get state of single bucket of org from InfluxDB. Returns 'present' if found and 'absent' if not present.
+        Initialize API class
         '''
-        headers = {
-            'Authorization': 'Token ' + module.params['token']
-        }
-
-        url = module.params['host'] + '/api/v2/buckets?name=' + module.params['name'] + "&orgID=" + InfluxApi.get_orgID_by_name(module)
-        response = requests.get(url, headers=headers)
-        json_resp = json.loads(response.content)
-
-        if "code" in json_resp:
-            if json_resp["code"] == "not found":
-                return "absent"
-
-        for bucket in json_resp["buckets"]:
-            if bucket['name'] == module.params['name']:
-                return 'present'
-            else:
-                return 'absent'
+        self.api_token, self.endpoint, self.timeout = token, host, 10
 
 
-    def get_all_orgs(module):
+    # Organizations
+
+    def get_all_orgs(self) -> json:
         '''
         Get all organizations from InfluxDB. Queries.
         Returns JSON.
         '''
 
         headers = {
-            'Authorization': 'Token ' + module.params['token']
+            'Authorization': 'Token ' + self.api_token
         }
-        response = requests.get(module.params['host'] + '/api/v2/orgs', headers=headers)
+        response = requests.get(self.endpoint + '/api/v2/orgs', headers=headers, timeout=self.timeout)
 
         return json.loads(response.content)
 
 
-    def get_orgID_by_name(module):
+    def get_orgid_by_name(self, name) -> str:
         '''
         Get organization ID by name. Returns ID
         If no organization is found by name, 'not found' will be returned.
         '''
 
-        orgs = InfluxApi.get_all_orgs(module)
+        orgs = self.get_all_orgs()
 
         for org in orgs['orgs']:
-            if org['name'] == module.params['org']:
+            if org['name'] == name:
                 return org['id']
-        
+
         return "not found"
 
 
-    def create_bucket(module):
-        '''
-        Create bucket
-        '''
+    # Buckets
 
-        headers = {
-            'Authorization': 'Token ' + module.params['token'],
-            'Content-type': 'application/json'
-        }
-
-        url = module.params['host'] + '/api/v2/buckets'
-        payload = {
-            'orgID': InfluxApi.get_orgID_by_name(module),
-            'name': module.params['name'],
-            'retentionRules': [
-                {
-                    'type': module.params['retention']['type'],
-                    'everySeconds': int(module.params['retention']['everySeconds']),
-                    'shardGroupDurationSeconds': int(module.params['retention']['shardGroupDurationSeconds'])
-                }
-            ]
-        }
-        response = requests.post(url, headers=headers, data=json.dumps(payload))
-
-        return response.status_code, response.content
-
-
-    def get_bucketID_by_name(module):
+    def get_bucketid_by_name(self, name, org): # pyling
         '''
         Get bucket ID by name. Returns ID
         If no bucket is found by name, 'not found' will be returned
         '''
 
         headers = {
-            'Authorization': 'Token ' + module.params['token']
+            'Authorization': 'Token ' + self.api_token
         }
 
-        url = module.params['host'] + '/api/v2/buckets?name=' + module.params['name'] + "&orgID=" + InfluxApi.get_orgID_by_name(module)
-        response = requests.get(url, headers=headers)
+        url = self.endpoint + '/api/v2/buckets?name=' + name + "&orgID=" + self.get_orgid_by_name(org)
+        response = requests.get(url, headers=headers, timeout=self.timeout)
         json_resp = json.loads(response.content)
 
         for bucket in json_resp['buckets']:
@@ -106,16 +73,67 @@ class InfluxApi():
         return "not found"
 
 
-    def delete_bucket(module):
+    def get_bucket_status(self, name, org_id):
+        '''
+        Get state of single bucket of org from InfluxDB. Returns 'present' if found and 'absent' if not present.
+        '''
+
+        headers = {
+            'Authorization': 'Token ' + self.api_token
+        }
+
+        url = self.endpoint + '/api/v2/buckets?name=' + name + "&orgID=" + org_id
+        response = requests.get(url, headers=headers, timeout=self.timeout)
+        json_resp = json.loads(response.content)
+
+        if "code" in json_resp:
+            if json_resp["code"] == "not found":
+                return "absent"
+
+        for bucket in json_resp["buckets"]:
+            if bucket['name'] == name:
+                return 'present'
+
+            return 'absent'
+
+
+    def create_bucket(self, name, org_id, retention):
+        '''
+        Create bucket
+        '''
+
+        headers = {
+            'Authorization': 'Token ' + self.api_token,
+            'Content-type': 'application/json'
+        }
+
+        url = self.endpoint + '/api/v2/buckets'
+        payload = {
+            'orgID': org_id,
+            'name': name,
+            'retentionRules': [
+                {
+                    'type': retention['type'],
+                    'everySeconds': int(retention['everySeconds']),
+                    'shardGroupDurationSeconds': int(retention['shardGroupDurationSeconds'])
+                }
+            ]
+        }
+        response = requests.post(url, headers=headers, data=json.dumps(payload), timeout=self.timeout)
+
+        return response.status_code, response.content
+
+
+    def delete_bucket(self, name, org):
         '''
         Delete bucket
         '''
 
         headers = {
-            'Authorization': 'Token ' + module.params['token']
+            'Authorization': 'Token ' + self.api_token
         }
 
-        url = module.params['host'] + '/api/v2/buckets/' + InfluxApi.get_bucketID_by_name(module)
-        response = requests.delete(url, headers=headers)
+        url = self.endpoint + '/api/v2/buckets/' + self.get_bucketid_by_name(name, org)
+        response = requests.delete(url, headers=headers, timeout=self.timeout)
 
         return response.status_code, response.content

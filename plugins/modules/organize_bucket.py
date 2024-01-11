@@ -1,11 +1,14 @@
 #!/usr/bin/python3
+# pylint: disable=missing-module-docstring
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.tbauriedel.influxdb.plugins.module_utils.utils import (
-    InfluxApi
-)
+from ansible_collections.tbauriedel.influxdb.plugins.module_utils.utils import (Influx2Api) # pylint: disable=import-error
 
 def run_module():
+    '''
+    Module to manage InfluxDB buckets
+    '''
+
     # Define new Module with arguments
     module = AnsibleModule(
         argument_spec=dict(
@@ -31,36 +34,39 @@ def run_module():
         rc=""
     )
 
+    # Prepare API class
+    API = Influx2Api(module.params['token'], module.params['host']) # pylint: disable=invalid-name
+
     # Get state of current bucket
-    orgID = InfluxApi.get_orgID_by_name(module)
-    if orgID == "not found":
-        module.exit_json(dict(
+    org_id = API.get_orgid_by_name(module.params['org'])
+    if org_id == "not found":
+        module.exit_json(
             failed=True,
-            stderr="No orgID found for given org name"
-        ))
+            stderr="No org id found for given org name"
+        )
 
     # Get state of bucket ('present' or 'absent')
-    bucketState = InfluxApi.get_bucket_status(module)
+    bucket_state = API.get_bucket_status(module.params['name'], org_id)
 
     # Create bucket if not 'present' but 'present' in configuration
-    if module.params['state'] == 'present' and bucketState == 'absent':
+    if module.params['state'] == 'present' and bucket_state == 'absent':
         result['debug'] = "Create bucket"
 
-        rc, content = InfluxApi.create_bucket(module)
+        rc, content = API.create_bucket(module.params['name'], org_id, module.params['retention'])
         result['rc'] = rc
         if rc != 201:
             module.exit_json(
                 failed=True,
                 stderr=content
             )
-            
+
         result['changed'] = True
 
     # Delete bucket if 'present' but 'absent' in configuration
-    elif module.params['state'] == 'absent' and bucketState == 'present':
+    elif module.params['state'] == 'absent' and bucket_state == 'present':
         result['debug'] = "Delete bucket"
 
-        rc, content = InfluxApi.delete_bucket(module)
+        rc, content = API.delete_bucket(module.params['name'], module.params['org'])
         result['rc'] = rc
         if rc != 204:
             module.exit_json(
@@ -74,9 +80,7 @@ def run_module():
         result['debug'] = "Keep state of bucket"
 
     module.exit_json(**result)
-    
-def main():
-    run_module()
+
 
 if __name__ == '__main__':
-    main()
+    run_module()
