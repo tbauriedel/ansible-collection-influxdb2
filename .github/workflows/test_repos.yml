@@ -1,0 +1,42 @@
+---
+name: tbauriedel.influxdb.repos
+
+on:
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  repos:
+    runs-on: ubuntu-latest
+
+    env:
+      COLLECTION_NAMESPACE: tbauriedel
+      COLLECTION_NAME: influxdb
+
+    strategy:
+      matrix:
+        distro: ['centos7', 'ubuntu2204']
+        scenario: ['repos']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies ansible
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements-test.txt
+
+      - name: Install collection
+        run: |
+          mkdir -p ~/.ansible/collections/ansible_collections/$COLLECTION_NAMESPACE
+          cp -a ../ansible-collection-$COLLECTION_NAME ~/.ansible/collections/ansible_collections/$COLLECTION_NAMESPACE/$COLLECTION_NAME
+
+      - name: Test with molecule
+        run: |
+          ansible --version
+          molecule --version
+          molecule test -s ${{ matrix.scenario }}
+        env:
+          MOLECULE_DISTRO: ${{ matrix.distro }}

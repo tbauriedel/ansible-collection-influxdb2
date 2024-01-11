@@ -7,6 +7,9 @@
 - name: Yum - Add repository to list
   ansible.builtin.yum_repository:
     state: present
+    enabled: true
     name: influxdb
     description: Stable InfluxDB repository
     baseurl: "{{ influxdb_repos_stable_baseurl }}"
+    gpgcheck: true
+    gpgkey: "{{ influxdb_repos_key_url }}"
