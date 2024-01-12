@@ -1,0 +1,20 @@
+---
+influxdb_influxdb2_packages:
+  - influxdb2
+  - influxdb2-cli
+
+influxdb_influxdb2_bolt_path: /var/lib/influxdb/influxd.bolt
+influxdb_influxdb2_engine_path: /var/lib/influxdb/engine
+
+influxdb_influxdb2_extra_config: ""
+
+influxdb_influxdb2_host: http://localhost:8086
+influxdb_influxdb2_primary_user:
+  name: admin
+  password: ChangeMe123!
+influxdb_influxdb2_primary_org: default
+influxdb_influxdb2_primary_bucket: default
+influxdb_influxdb2_admin_token: "Random123ChangeMe!"
+influxdb_influxdb2_retention: 0
+
+influxdb_influxdb2_buckets: []
