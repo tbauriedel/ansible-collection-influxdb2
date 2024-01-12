@@ -1,5 +1,5 @@
 ---
-name: tbauriedel.influxdb.repos
+name: Build
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
       - '*'
 
 jobs:
-  repos:
+  build:
     runs-on: ubuntu-latest
 
     env:
@@ -16,14 +16,19 @@ jobs:
 
     strategy:
       matrix:
-        distro: ['centos7', 'ubuntu2204']
-        scenario: ['repos']
+        distro: ['rockylinux9', 'ubuntu2204']
+        scenario: ['repos', 'influxdb2']
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install dependencies ansible
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
           python3 -m pip install -r requirements-test.txt

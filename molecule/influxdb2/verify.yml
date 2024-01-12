@@ -1,0 +1,8 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Ensure service is running
+      ansible.builtin.service:
+        name: influxdb
+        state: started

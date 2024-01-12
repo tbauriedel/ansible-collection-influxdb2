@@ -1,0 +1,7 @@
+---
+- name: Prepare
+  hosts: all
+  tasks:
+    - name: Ensure python3-requests is installed
+      ansible.builtin.pip:
+        name: requests

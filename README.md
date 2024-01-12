@@ -46,4 +46,4 @@ It was created with the aim of refreshing my Ansible knowledge and getting in to
 | Distribution | Tested on    |
 |--------------|--------------|
 | Ubuntu       | 22.04        |
-| Centos       | 7            |
+| Rocky        | 9            |
