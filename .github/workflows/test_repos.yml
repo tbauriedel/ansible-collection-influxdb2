@@ -12,7 +12,7 @@ jobs:
 
     env:
       COLLECTION_NAMESPACE: tbauriedel
-      COLLECTION_NAME: influxdb
+      COLLECTION_NAME: influxdb2
 
     strategy:
       matrix:
