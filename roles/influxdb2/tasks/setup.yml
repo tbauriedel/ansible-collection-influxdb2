@@ -1,18 +1,18 @@
 ---
 - name: Ensure admin setup token is definded
   ansible.builtin.fail:
-    msg: Variable influxdb_influxdb_admin_token is not defined in variables
-  when: influxdb_influxdb_admin_token == ""
+    msg: Variable influxdb_influxdb2_admin_token is not defined in variables
+  when: influxdb_influxdb2_admin_token == ""
 
 - name: Ensure InfluxDB is set up
   ansible.builtin.command: influx setup \
-      --host "{{ influxdb_influxdb_host }}" \
-      --username "{{ influxdb_influxdb_primary_user.name }}" \
-      --password "{{ influxdb_influxdb_primary_user.password }}" \
-      --org "{{ influxdb_influxdb_primary_org }}" \
-      --bucket "{{ influxdb_influxdb_primary_bucket }}" \
-      --retention "{{ influxdb_influxdb_retention }}" \
-      --token "{{ influxdb_influxdb_admin_token }}" \
+      --host "{{ influxdb_influxdb2_host }}" \
+      --username "{{ influxdb_influxdb2_primary_user.name }}" \
+      --password "{{ influxdb_influxdb2_primary_user.password }}" \
+      --org "{{ influxdb_influxdb2_primary_org }}" \
+      --bucket "{{ influxdb_influxdb2_primary_bucket }}" \
+      --retention "{{ influxdb_influxdb2_retention }}" \
+      --token "{{ influxdb_influxdb2_admin_token }}" \
       --force
   register: _influx_setup
   failed_when:
@@ -27,9 +27,9 @@
     state: "{{ item.state }}"
     org: "{{ item.org }}"
     token: "{{ item.token }}"
-    host: "{{ influxdb_influxdb_host }}"
+    host: "{{ influxdb_influxdb2_host }}"
     retention:
       type: "{{ item.retention.type }}"
       everySeconds: "{{ item.retention.everySeconds }}"
       shardGroupDurationSeconds: "{{ item.retention.shardGroupDurationSeconds }}"
-  loop: "{{ influxdb_influxdb_buckets }}"
+  loop: "{{ influxdb_influxdb2_buckets }}"

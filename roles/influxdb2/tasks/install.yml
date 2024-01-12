@@ -3,7 +3,7 @@
   ansible.builtin.package:
     name: "{{ item }}"
     state: present
-  loop: "{{ influxdb_influxdb_packages }}"
+  loop: "{{ influxdb_influxdb2_packages }}"
   notify: Restart InfluxDB
 
 - name: Ensure startup config is there
