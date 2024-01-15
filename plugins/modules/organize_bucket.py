@@ -2,7 +2,9 @@
 # pylint: disable=missing-module-docstring
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.tbauriedel.influxdb.plugins.module_utils.utils import (Influx2Api) # pylint: disable=import-error
+from ansible_collections.tbauriedel.influxdb2.plugins.module_utils.utils import (
+    Influx2Api,
+)
 
 def run_module():
     '''

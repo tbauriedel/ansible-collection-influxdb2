@@ -1,0 +1,3 @@
+---
+influxdb_repos_key_url: https://repos.influxdata.com/influxdata-archive_compat.key
+influxdb_repos_stable_baseurl: "https://repos.influxdata.com/rhel/$releasever/$basearch/stable"

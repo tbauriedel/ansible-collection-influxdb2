@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+
+  collections:
+    - tbauriedel.influxdb2
+
+  roles:
+    - repos

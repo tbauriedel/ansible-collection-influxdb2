@@ -22,7 +22,7 @@
 
 # TODO add handling for orgs, buckets, etc.
 - name: Organize buckets
-  tbauriedel.influxdb.organize_bucket:
+  tbauriedel.influxdb2.organize_bucket:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
     org: "{{ item.org }}"

@@ -1,0 +1,8 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Try to install InfluxDBv2 from included repository
+      ansible.builtin.package:
+        name: influxdb2
+        state: present
