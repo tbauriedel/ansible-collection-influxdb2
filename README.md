@@ -1,4 +1,5 @@
 ![Lint](https://github.com/tbauriedel/ansible-collection-influxdb2/actions/workflows/yamllint.yml/badge.svg)
+test
 
 > **Note:** Collection is work in progress
 
