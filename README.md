@@ -1,6 +1,6 @@
-![Lint](https://github.com/tbauriedel/ansible-collection-influxdb2/actions/workflows/yamllint.yml/badge.svg)
+![Lint](https://github.com/tbauriedel/ansible-collection-influxdb2/actions/workflows/yamllint.yml/badge.svg) ![Build](https://github.com/tbauriedel/ansible-collection-influxdb2/actions/workflows/molecule.yml/badge.svg)
 
-> **Note:** Collection is work in progress
+> **Note:** Collection is not production-ready yet
 
 # ansible-collection-influxdb2
 
@@ -15,6 +15,10 @@ It was created with the aim of refreshing my Ansible knowledge and getting in to
 
 * [Role: repos](roles/repos/README.md) - Install the official InfluxDb repositories
 * [Role: influxdb2](roles/influxdb2/README.md) - Install and configure InfluxDBv2
+
+## Modules
+
+* [Module: influxdb2_organizsation](plugins/modules/influxdb2_organization.py): Create, update and delete InfluxDBv2 organizations
 
 ## Example
 

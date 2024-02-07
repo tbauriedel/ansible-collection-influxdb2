@@ -4,16 +4,28 @@
 
   vars:
     influxdb_influxdb2_admin_token: 123456789abc!
-    influxdb_influxdb2_buckets:
-      - name: foobar1
-        state: present
-        org: default
+    influxdb_influxdb2_orgs:
+      - name: org1
+        desc: this is org-1
+        state: absent
         token: "{{ influxdb_influxdb2_admin_token }}"
-        host: "{{ influxdb_influxdb2_host }}"
-        retention:
-          type: 'expire'
-          everySeconds: 50000
-          shardGroupDurationSeconds: 0
+        host: http://localhost:8086
+      - name: org2
+        desc: This is org-2
+        state: absent
+        token: "{{ influxdb_influxdb2_admin_token }}"
+        host: http://localhost:8086
+
+#    influxdb_influxdb2_buckets:
+#      - name: foobar1
+#        state: present
+#        org: default
+#        token: "{{ influxdb_influxdb2_admin_token }}"
+#        host: "{{ influxdb_influxdb2_host }}"
+#        retention:
+#          type: expire
+#          everySeconds: 50000
+#          shardGroupDurationSeconds: 0
 
   collections:
     - tbauriedel.influxdb2

@@ -18,3 +18,4 @@ influxdb_influxdb2_admin_token: "Random123ChangeMe!"
 influxdb_influxdb2_retention: 0
 
 influxdb_influxdb2_buckets: []
+influxdb_influxdb2_orgs: []
