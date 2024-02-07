@@ -7,12 +7,7 @@
     influxdb_influxdb2_orgs:
       - name: org1
         desc: this is org-1
-        state: absent
-        token: "{{ influxdb_influxdb2_admin_token }}"
-        host: http://localhost:8086
-      - name: org2
-        desc: This is org-2
-        state: absent
+        state: present
         token: "{{ influxdb_influxdb2_admin_token }}"
         host: http://localhost:8086
 
