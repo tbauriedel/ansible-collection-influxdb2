@@ -18,7 +18,7 @@ It was created with the aim of refreshing my Ansible knowledge and getting in to
 
 ## Modules
 
-* [Module: influxdb2_organizsation](plugins/modules/influxdb2_organization.py): Create, update and delete InfluxDBv2 organizations
+* [Module: influxdb2_organization](plugins/modules/influxdb2_organization.py): Create, update and delete InfluxDBv2 organizations
 
 ## Example
 

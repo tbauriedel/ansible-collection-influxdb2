@@ -3,6 +3,10 @@
 
 from ansible.module_utils.basic import AnsibleModule
 
+from ansible_collections.tbauriedel.influxdb2.plugins.module_utils.influxdb2_bucket import (
+    BucketApi
+)
+
 def run_module():
     '''
     Module to manage InfluxDB buckets
@@ -13,6 +17,7 @@ def run_module():
         argument_spec=dict(
             name=dict(type=str, required=True),
             state=dict(type=str, required=True),
+            desc=dict(type=str, required=False),
             token=dict(type=str, Required=True, no_log=True),
             host=dict(type=str, Required=True),
             org=dict(type=str, required=False),
@@ -32,7 +37,20 @@ def run_module():
         failed=False,
     )
 
-    # TODO add handling
+    bucket = BucketApi(
+        result=result,
+        name=module.params['name'],
+        state=module.params['state'],
+        host=module.params['host'],
+        token=module.params['token'],
+        desc=module.params['desc'],
+        org=module.params['org'],
+        retention=module.params['retention']
+    )
+
+    bucket.handle()
+
+    result = bucket.return_result()
 
     module.exit_json(**result)
 

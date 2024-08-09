@@ -12,18 +12,14 @@ from ansible_collections.tbauriedel.influxdb2.plugins.module_utils.api import (
     Api
 )
 
-class Org():
-    def __init__(self, name, state, desc, result, host, token):
+class OrgApi():
+    def __init__(self, host, token, name='', state='', desc='', result=dict):
         self.name = name
         self.state = state
         self.desc = desc
         self.result = result
 
         self.client = Api.new_client(host=host, token=token).organizations_api()
-
-        self.handle()
-
-        return
 
     
     def return_result(self) ->dict:
@@ -50,8 +46,7 @@ class Org():
         if org.status != 'active':
             return
 
-        res = self.delete(org.id)
-        self.result['debug'] = res
+        self.delete(org.id)
         self.result['changed'] = True
         self.result['msg'] = self.name + " has been deleted"
         
@@ -59,11 +54,14 @@ class Org():
 
 
     def handle_present(self):
+        # build emtpy org
         pre_org = Organization(name=self.name, description=self.desc, status='inactive')
+
+        # fetch all orgs and save found bucket into pre_org
         for row in self.get_all():
             if row.name != self.name:
                 continue
-            pre_org = self.get(row.id)
+            pre_org = self.get_by_id(row.id)
             break
 
         if  pre_org.status != 'active':
@@ -96,5 +94,13 @@ class Org():
         return self.client.find_organizations()
 
 
-    def get(self, id) -> Organization:
+    def get_by_id(self, id) -> Organization:
         return self.client.find_organization(org_id=id)
+
+
+    def get_by_name(self, name) -> Organization:
+        for row in self.get_all():
+            if row.name != name:
+                continue
+            return row
+        return Organization(name='', status='inactive')

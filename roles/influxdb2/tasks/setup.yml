@@ -23,22 +23,23 @@
 - name: Manage organizations
   tbauriedel.influxdb2.influxdb2_organization:
     name: "{{ item.name }}"
-    state: "{{ item.state }}"
-    desc: "{{ item.desc }}"
+    state: "{{ item.state | default('present') }}"
+    desc: "{{ item.desc | default('') }}"
     token: "{{ item.token }}"
     host: "{{ item.host }}"
   loop: "{{ influxdb_influxdb2_orgs }}"
   when: influxdb_influxdb2_orgs | length > 0
 
-#- name: Organize buckets
-#  tbauriedel.influxdb2.organize_bucket:
-#    name: "{{ item.name }}"
-#    state: "{{ item.state }}"
-#    org: "{{ item.org }}"
-#    token: "{{ item.token }}"
-#    host: "{{ influxdb_influxdb2_host }}"
-#    retention:
-#      type: "{{ item.retention.type }}"
-#      everySeconds: "{{ item.retention.everySeconds }}"
-#      shardGroupDurationSeconds: "{{ item.retention.shardGroupDurationSeconds }}"
-#  loop: "{{ influxdb_influxdb2_buckets }}"
+- name: Manage buckets
+  tbauriedel.influxdb2.influxdb2_bucket:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+    desc: "{{ item.desc | default('') }}"
+    org: "{{ item.org }}"
+    token: "{{ item.token }}"
+    host: "{{ influxdb_influxdb2_host }}"
+    retention:
+      type: "{{ item.retention.type | default('expire') }}" 
+      everySeconds: "{{ item.retention.everySeconds | default(3628600) }}"
+      shardGroupDurationSeconds: "{{ item.retention.shardGroupDurationSeconds | default(0) }}"
+  loop: "{{ influxdb_influxdb2_buckets }}"

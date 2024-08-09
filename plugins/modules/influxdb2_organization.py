@@ -6,7 +6,7 @@ from ansible.module_utils.basic import (
 )
 
 from ansible_collections.tbauriedel.influxdb2.plugins.module_utils.influxdb2_organization import (
-    Org
+    OrgApi
 )
 
 def run_module():
@@ -32,7 +32,7 @@ def run_module():
         module.exit_json(**result)
 
 
-    org = Org(
+    org = OrgApi(
         result=result,
         host=module.params['host'],
         token=module.params['token'],
@@ -40,6 +40,8 @@ def run_module():
         name=module.params['name'],
         state=module.params['state'],
     )
+
+    org.handle()
     
     result = org.return_result()
 
