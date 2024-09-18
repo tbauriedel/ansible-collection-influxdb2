@@ -7,13 +7,15 @@
 #
 #    http://www.apache.org/licenses/LICENSE-2.0
 
-from influxdb_client import Bucket ,BucketRetentionRules, Buckets
+from re import T
+from influxdb_client import Bucket, BucketRetentionRules, Buckets
 from ansible_collections.tbauriedel.influxdb2.plugins.module_utils.api import (
     Api
 )
 from ansible_collections.tbauriedel.influxdb2.plugins.module_utils.influxdb2_organization import (
     OrgApi
 )
+
 
 class BucketApi():
     def __init__(self, name, state, desc, result, host, token, org, retention):
@@ -23,16 +25,14 @@ class BucketApi():
         self.org = org
         self.retention = retention
         self.result = result
-        
+
         self.client = Api.new_client(host=host, token=token).buckets_api()
 
         self.host = host
         self.token = token
 
-    
-    def return_result(self) ->dict:
+    def return_result(self) -> dict:
         return self.result
-
 
     def handle(self):
         if self.state == 'absent':
@@ -42,15 +42,15 @@ class BucketApi():
 
         return
 
-    
     def handle_absent(self):
-        bucket = Bucket(name=self.name, id="0")
-        for row in self.get_all():
+        bucket = Bucket(name=self.name, description=self.desc, id="0", retention_rules=[BucketRetentionRules(type=self.retention['type'], every_seconds=int(
+            self.retention['everySeconds']), shard_group_duration_seconds=int(self.retention['shardGroupDurationSeconds']))])
+        for row in self.get_all().buckets:
             if row.name != self.name:
                 continue
             bucket = row
             break
-        
+
         if bucket.id == "0":
             return
 
@@ -60,16 +60,16 @@ class BucketApi():
 
         return
 
-
     def handle_present(self):
-        # Build empty bucket
-        pre_bucket = Bucket(name=self.name, description=self.desc, id="0", retention_rules=BucketRetentionRules(type=self.retention['type'], every_seconds=int(self.retention['everySeconds'])))
+        pre_bucket = Bucket(name=self.name, description=self.desc, id="0", retention_rules=[BucketRetentionRules(type=self.retention['type'], every_seconds=int(
+            self.retention['everySeconds']), shard_group_duration_seconds=int(self.retention['shardGroupDurationSeconds']))])
 
         # fetch all buckets and save found bucket into pre_bucket
         for row in self.get_all().buckets:
             if row.name != self.name:
                 continue
             pre_bucket = self.get_by_id(row.id)
+
             break
 
         # Create new bucket if not exists
@@ -77,38 +77,42 @@ class BucketApi():
             bucket = self.create()
             if bucket.id == '0':
                 self.result['changed'] = False
-                self.result['msg'] = self.name + " cant create new bucket"
+                self.result['msg'] = self.name + \
+                    " cant create new bucket because organization does not exists"
+                return
 
             self.result['changed'] = True
             self.result['msg'] = self.name + " has been created"
             return
 
-        # TODO update bucket
+        if (
+            pre_bucket.name != self.name or
+            (pre_bucket.description or "") != self.desc or
+            pre_bucket.retention_rules != [BucketRetentionRules(type=self.retention['type'], every_seconds=int(
+                self.retention['everySeconds']), shard_group_duration_seconds=int(self.retention['shardGroupDurationSeconds']))]
+        ):
+            self.update(pre_bucket.id)
+            self.result['changed'] = True
+            self.result['msg'] = self.name + " has been updated"
         return
 
     def create(self) -> Bucket:
         orgApi = OrgApi(host=self.host, token=self.token)
         org = orgApi.get_by_name(self.org)
         if org.status != 'inactive':
-            # TODO debug retention
-            # test with molecule
-            return self.client.create_bucket(bucket_name=self.name, bucket=Bucket(name=self.name, org_id=org.id, description=self.desc, retention_rules=BucketRetentionRules(type=self.retention['type'], every_seconds=int(self.retention['everySeconds']))))
-
+            return self.client.create_bucket(bucket=Bucket(name=self.name, org_id=org.id, description=self.desc, retention_rules=[BucketRetentionRules(type=self.retention['type'], every_seconds=int(
+                self.retention['everySeconds']), shard_group_duration_seconds=int(self.retention['shardGroupDurationSeconds']))]))
 
         return Bucket(name='', id='0')
 
-
     def update(self, id) -> Bucket:
-        return self.client.update_bucket(bucket=Bucket(name=self.name, description=self.desc, id=id, retention_rules=BucketRetentionRules(type=self.retention['type'], every_seconds=self.retention['everySeconds'])))
+        return self.client.update_bucket(bucket=Bucket(name=self.name, description=self.desc, id=id, retention_rules=[BucketRetentionRules(type=self.retention['type'], every_seconds=int(self.retention['everySeconds']), shard_group_duration_seconds=int(self.retention['shardGroupDurationSeconds']))]))
 
-    
     def delete(self, id):
         return self.client.delete_bucket(bucket=id)
-
 
     def get_all(self) -> Buckets:
         return self.client.find_buckets()
 
-
     def get_by_id(self, id) -> Bucket:
-        return self.client.find_buckets(name=self.name, org=self.org)
+        return self.client.find_bucket_by_id(id=id)

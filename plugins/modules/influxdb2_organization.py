@@ -9,6 +9,7 @@ from ansible_collections.tbauriedel.influxdb2.plugins.module_utils.influxdb2_org
     OrgApi
 )
 
+
 def run_module():
     module = AnsibleModule(
         argument_spec=dict(
@@ -16,11 +17,11 @@ def run_module():
             state=dict(type=str, required=True),
             desc=dict(type=str, required=False),
             host=dict(type=str, required=True),
-            token=dict(type=str, required=True)
+            token=dict(type=str, required=True, no_log=True)
         )
     )
 
-    result=dict(
+    result = dict(
         changed=False,
         failed=False,
     )
@@ -30,7 +31,6 @@ def run_module():
         result['failed'] = True
 
         module.exit_json(**result)
-
 
     org = OrgApi(
         result=result,
@@ -42,10 +42,11 @@ def run_module():
     )
 
     org.handle()
-    
+
     result = org.return_result()
 
     module.exit_json(**result)
+
 
 if __name__ == "__main__":
     run_module()

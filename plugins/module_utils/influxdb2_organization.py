@@ -12,6 +12,7 @@ from ansible_collections.tbauriedel.influxdb2.plugins.module_utils.api import (
     Api
 )
 
+
 class OrgApi():
     def __init__(self, host, token, name='', state='', desc='', result=dict):
         self.name = name
@@ -19,13 +20,12 @@ class OrgApi():
         self.desc = desc
         self.result = result
 
-        self.client = Api.new_client(host=host, token=token).organizations_api()
+        self.client = Api.new_client(
+            host=host, token=token).organizations_api()
 
-    
-    def return_result(self) ->dict:
+    def return_result(self) -> dict:
         return self.result
 
-    
     def handle(self):
         if self.state == 'absent':
             self.handle_absent()
@@ -34,7 +34,6 @@ class OrgApi():
 
         return
 
-    
     def handle_absent(self):
         org = Organization(name=self.name, status='inactive')
         for row in self.get_all():
@@ -49,13 +48,13 @@ class OrgApi():
         self.delete(org.id)
         self.result['changed'] = True
         self.result['msg'] = self.name + " has been deleted"
-        
-        return
 
+        return
 
     def handle_present(self):
         # build emtpy org
-        pre_org = Organization(name=self.name, description=self.desc, status='inactive')
+        pre_org = Organization(
+            name=self.name, description=self.desc, status='inactive')
 
         # fetch all orgs and save found bucket into pre_org
         for row in self.get_all():
@@ -64,39 +63,36 @@ class OrgApi():
             pre_org = self.get_by_id(row.id)
             break
 
-        if  pre_org.status != 'active':
+        if pre_org.status != 'active':
             res = self.create()
             self.result['changed'] = True
             self.result['msg'] = self.name + " has been created"
             return
 
-        if self.desc != pre_org.description:
+        if (
+            (pre_org.description or "") != self.desc or
+            self.name != pre_org.name
+        ):
             self.update(pre_org.id)
             self.result['changed'] = True
             self.result['msg'] = self.name + " has been updated"
-    
-        return
 
+        return
 
     def create(self) -> Organization:
         return self.client.create_organization(name=self.name, organization=Organization(name=self.name, description=self.desc))
 
-
     def update(self, id) -> Organization:
         return self.client.update_organization(organization=Organization(name=self.name, description=self.desc, id=id))
-
 
     def delete(self, id):
         return self.client.delete_organization(org_id=id)
 
-
     def get_all(self) -> list[Organization]:
         return self.client.find_organizations()
 
-
     def get_by_id(self, id) -> Organization:
         return self.client.find_organization(org_id=id)
-
 
     def get_by_name(self, name) -> Organization:
         for row in self.get_all():

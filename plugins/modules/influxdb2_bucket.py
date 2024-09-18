@@ -7,6 +7,7 @@ from ansible_collections.tbauriedel.influxdb2.plugins.module_utils.influxdb2_buc
     BucketApi
 )
 
+
 def run_module():
     '''
     Module to manage InfluxDB buckets
