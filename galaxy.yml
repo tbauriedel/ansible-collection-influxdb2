@@ -10,6 +10,6 @@ license:
   - Apache-2.0
 tags:
   - metrics
-  - InfluxDB2
+  - influxdb2
 dependencies: {}
 repository: https://github.com/tbauriedel/ansible-collection-influxdb2
