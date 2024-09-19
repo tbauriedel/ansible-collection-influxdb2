@@ -20,11 +20,21 @@
     - '"has already been set up" not in _influx_setup.stderr'
   changed_when: _influx_setup.rc == 0
 
-# TODO add handling for orgs, buckets, etc.
-- name: Organize buckets
-  tbauriedel.influxdb2.organize_bucket:
+- name: Manage organizations
+  tbauriedel.influxdb2.influxdb2_organization:
     name: "{{ item.name }}"
-    state: "{{ item.state }}"
+    state: "{{ item.state | default('present') }}"
+    desc: "{{ item.desc | default('') }}"
+    token: "{{ item.token }}"
+    host: "{{ influxdb_influxdb2_host }}"
+  loop: "{{ influxdb_influxdb2_orgs }}"
+  when: influxdb_influxdb2_orgs | length > 0
+
+- name: Manage buckets
+  tbauriedel.influxdb2.influxdb2_bucket:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+    desc: "{{ item.desc | default('') }}"
     org: "{{ item.org }}"
     token: "{{ item.token }}"
     host: "{{ influxdb_influxdb2_host }}"

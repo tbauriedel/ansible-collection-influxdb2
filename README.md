@@ -1,6 +1,6 @@
-![Lint](https://github.com/tbauriedel/ansible-collection-influxdb2/actions/workflows/yamllint.yml/badge.svg)
+![Lint](https://github.com/tbauriedel/ansible-collection-influxdb2/actions/workflows/yamllint.yml/badge.svg) ![Build](https://github.com/tbauriedel/ansible-collection-influxdb2/actions/workflows/molecule.yml/badge.svg)
 
-> **Note:** Collection is work in progress
+> **Note:** Collection is not production-ready yet
 
 # ansible-collection-influxdb2
 
@@ -16,26 +16,36 @@ It was created with the aim of refreshing my Ansible knowledge and getting in to
 * [Role: repos](roles/repos/README.md) - Install the official InfluxDb repositories
 * [Role: influxdb2](roles/influxdb2/README.md) - Install and configure InfluxDBv2
 
+## Modules
+
+* [Module: influxdb2_organization](doc/modules/influxdb2_organization.py): Create, update and delete InfluxDBv2 organizations
+* [Module: influxdb2_bucket](doc/modules/influxdb2_bucket.md.py): Create, update and delete InfluxDBv2 buckets
+
 ## Example
 
 ```
-- hosts: all
-  become: true
+- name: InfluxDB
+  hosts: all
+
   vars:
-    influxdb_influxdb2_admin_token: 12345678abcdefg
+    influxdb_influxdb2_admin_token: 123456789abc!
+    influxdb_influxdb2_orgs:
+      - name: org1
+        desc: "This is a description"
+        token: "{{ influxdb_influxdb2_admin_token }}"
+
     influxdb_influxdb2_buckets:
-      - name: foobar1
-        state: absent
-        org: default
-        token: "{{ influxdb_influxdb2admin_token }}"
-        host: "{{ influxdb_influxdb2_host }}"
+      - name: bucket-1
+        desc: "This is a description"
+        org: org1
+        token: "{{ influxdb_influxdb2_admin_token }}"
         retention:
           type: 'expire'
-          everySeconds: '50000'
-          shardGroupDurationSeconds: '0'
+          everySeconds: '60000'
+          shardGroupDurationSeconds: '7600'
 
   collections:
-    tbauriedel.influxdb2
+    - tbauriedel.influxdb2
 
   roles:
     - repos

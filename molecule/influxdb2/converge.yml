@@ -1,19 +1,22 @@
----
 - name: Converge
   hosts: all
 
   vars:
     influxdb_influxdb2_admin_token: 123456789abc!
-    influxdb_influxdb2_buckets:
-      - name: foobar1
-        state: present
-        org: default
+    influxdb_influxdb2_orgs:
+      - name: org1
+        desc: "This is a description"
         token: "{{ influxdb_influxdb2_admin_token }}"
-        host: "{{ influxdb_influxdb2_host }}"
+
+    influxdb_influxdb2_buckets:
+      - name: bucket-1
+        desc: "This is a description"
+        org: org1
+        token: "{{ influxdb_influxdb2_admin_token }}"
         retention:
           type: 'expire'
-          everySeconds: 50000
-          shardGroupDurationSeconds: 0
+          everySeconds: '60000'
+          shardGroupDurationSeconds: '7600'
 
   collections:
     - tbauriedel.influxdb2
