@@ -7,6 +7,7 @@
 #
 #    http://www.apache.org/licenses/LICENSE-2.0
 
+from typing import List
 from influxdb_client import Organization
 from ansible_collections.tbauriedel.influxdb2.plugins.module_utils.api import (
     Api
@@ -88,7 +89,7 @@ class OrgApi():
     def delete(self, id):
         return self.client.delete_organization(org_id=id)
 
-    def get_all(self) -> list[Organization]:
+    def get_all(self) -> List[Organization]:
         return self.client.find_organizations()
 
     def get_by_id(self, id) -> Organization:

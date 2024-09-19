@@ -1,5 +1,17 @@
 ---
-- name: Ensure InfluxDB packages are installed
+- name: Install python3 packages
+  ansible.builtin.package:
+    name:
+      - python3
+      - python3-pip
+    state: present
+
+- name: Install influxb-client for python
+  ansible.builtin.pip:
+    name: influxdb-client
+    state: present
+
+- name: Install InfluxDB
   ansible.builtin.package:
     name: "{{ item }}"
     state: present
