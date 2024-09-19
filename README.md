@@ -1,15 +1,12 @@
 ![Lint](https://github.com/tbauriedel/ansible-collection-influxdb2/actions/workflows/yamllint.yml/badge.svg) ![Build](https://github.com/tbauriedel/ansible-collection-influxdb2/actions/workflows/molecule.yml/badge.svg)
 
-> **Note:** Collection is not production-ready yet
-
 # ansible-collection-influxdb2
 
 Ansible collection to manage [InfluxDBv2](https://www.influxdata.com/) repository and setup.  
 Read more about InfluxDBv2 in the [official documentation](https://docs.influxdata.com/influxdb/v2/).
 
-The collection is still at a very experimental stage and is growing bit by bit according to my use cases. New configuration options will be implemented when they are needed. If you already have requests, please let me know via issue (or pull request).
-
-It was created with the aim of refreshing my Ansible knowledge and getting in touch with Collections. Any hints for improvements are therefore welcome.
+## Installation
+`ansible-galaxy collection install tbauriedel.influxdb2`
 
 ## Roles
 
@@ -57,3 +54,10 @@ It was created with the aim of refreshing my Ansible knowledge and getting in to
 |--------------|--------------|
 | Ubuntu       | 22.04        |
 | Rocky        | 9            |
+
+## Contribution
+Not all components of the go-graphite project are currently managed with that collection.  
+Also not every configuration possibility are implemented for the already existing roles.
+
+New stuff will be added setp by step, wgen the need arises.
+If you want to use this ansible collection but something is missing, you are welcome to create a PR with the necessary settings!
