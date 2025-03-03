@@ -7,7 +7,7 @@
       - name: org1
         desc: "This is a description"
         token: "{{ influxdb_influxdb2_admin_token }}"
-    influxdb_force_pip: true
+    influxdb_influxdb2_force_pip: true
 
     influxdb_influxdb2_buckets:
       - name: bucket-1
