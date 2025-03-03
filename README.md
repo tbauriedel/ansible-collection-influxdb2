@@ -8,6 +8,8 @@ Read more about InfluxDBv2 in the [official documentation](https://docs.influxda
 ## Installation
 `ansible-galaxy collection install tbauriedel.influxdb2`
 
+On rpm based Distributions you need the EPEL repository to be available.
+
 ## Roles
 
 * [Role: repos](roles/repos/README.md) - Install the official InfluxDb repositories

@@ -24,3 +24,10 @@
   roles:
     - repos
     - influxdb2
+
+  pre_tasks:
+    - name: Activate EPEL on rpm based distros
+      package:
+        name: epel-release
+      when:
+        - ansible_os_family == "RedHat"
