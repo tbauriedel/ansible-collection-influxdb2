@@ -3,7 +3,7 @@
   ansible.builtin.package:
     name:
       - python3
-      - python3-influxdb
+      - python3-influxdb-client
     state: present
 
 - name: Install InfluxDB
