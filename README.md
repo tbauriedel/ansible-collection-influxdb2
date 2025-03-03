@@ -18,6 +18,10 @@ Read more about InfluxDBv2 in the [official documentation](https://docs.influxda
 * [Module: influxdb2_organization](doc/modules/influxdb2_organization.py): Create, update and delete InfluxDBv2 organizations
 * [Module: influxdb2_bucket](doc/modules/influxdb2_bucket.md.py): Create, update and delete InfluxDBv2 buckets
 
+## Variables
+
+* `influxdb_force_pip`: Pip won't let you install Python modules if there is a package managed Python installation. Since the required modules are not available on all supported distributions you can override this behaviour by setting this variable to `true`. (Default: not set)
+
 ## Example
 
 ```

@@ -6,10 +6,26 @@
       - python3-pip
     state: present
 
-- name: Install influxb-client for python
+- name: Install influxdb-client via block for rescue
+  when:
+    - not influxdb_force_pip | bool
+  block:
+    - name: Install influxdb-client for python
+      ansible.builtin.pip:
+        name: influxdb-client
+        state: present
+  rescue:
+    - name: Fail with error message
+      fail:
+        msg: NOTE You can force this installation. See README about variable influxdb_force_pip
+
+- name: Install influxb-client for python (forced)
   ansible.builtin.pip:
     name: influxdb-client
     state: present
+    break_system_packages: true
+  when:
+    - influxdb_force_pip | bool
 
 - name: Install InfluxDB
   ansible.builtin.package:
