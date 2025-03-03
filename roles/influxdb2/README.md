@@ -20,7 +20,7 @@ At the moment the configuration is very basic. Over time, this role will be expa
 * `influxdb_influxdb2_primary_bucket`: Primary bucket (default: 'default')
 * `influxdb_influxdb2_retention`: Retention for primary bucket (default: '0')
 * `influxdb_influxdb2_admin_token`: Admin API token created in the setup (default: 'Random123ChangeMe!')
-* `influxdb_influxdb2_force_pip`: Pip won't let you install Python modules if there is a package managed Python installation. Since the required modules are not available on all supported distributions you can override this behaviour by setting this variable to `true`. (Default: not set)
+* `influxdb_influxdb2_force_pip`: Pip won't let you install Python modules if there is a package managed Python installation. Since the required modules are not available on all supported distributions you can override this behaviour by setting this variable to `true`. (Default: `false`)
 
 **Organizations**
 * `influxdb_influxdb2_orgs`: List of organizations to manage
