@@ -52,6 +52,7 @@ Read more about InfluxDBv2 in the [official documentation](https://docs.influxda
 ## Supported systems
 | Distribution | Tested on    |
 |--------------|--------------|
+| Debian       | 12           |
 | Ubuntu       | 22.04        |
 | Rocky        | 9            |
 
