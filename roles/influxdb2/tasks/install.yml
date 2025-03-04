@@ -8,7 +8,7 @@
 
 - name: Install influxdb-client via block for rescue
   when:
-    - not influxdb_force_influxdb2_pip | bool
+    - not influxdb_influxdb2_force_pip | bool
   block:
     - name: Install influxdb-client for python
       ansible.builtin.pip:
