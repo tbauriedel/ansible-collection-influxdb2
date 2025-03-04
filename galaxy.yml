@@ -1,6 +1,6 @@
 namespace: tbauriedel
 name: influxdb2
-version: 0.0.2
+version: 0.0.3
 readme: README.md
 authors:
   - Tobias Bauriedel <tobias@bauriedel.de>
