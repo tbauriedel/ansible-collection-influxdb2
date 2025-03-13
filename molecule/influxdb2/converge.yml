@@ -1,7 +1,34 @@
 - name: Converge
   hosts: all
+  pre_tasks:
+    - name: Create influxdb cert dir
+      ansible.builtin.file:
+        path: "/etc/influxdb/tls"
+        state: directory
+        owner: root
+        group: root
+
+    - name: Generate OpenSSL private key
+      community.crypto.openssl_privatekey:
+        path: /etc/influxdb/tls/tls.pem
+        size: 4096
+        owner: root
+        group: root
+        mode: "0640"
+
+    - name: Generate Self Signed OpenSSL certificate
+      community.crypto.x509_certificate:
+        path: /etc/influxdb/tls/tls.cert
+        privatekey_path: /etc/influxdb/tls/tls.pem
+        provider: selfsigned
+        owner: root
+        group: root
+        mode: "0640"
 
   vars:
+    influxdb_influxdb2_tls_enabled: true
+    influxdb_influxdb2_tls_cert: /etc/influxdb/tls/tls.cert
+    influxdb_influxdb2_tls_key: /etc/influxdb/tls/tls.pem
     influxdb_influxdb2_admin_token: 123456789abc!
     influxdb_influxdb2_orgs:
       - name: org1
