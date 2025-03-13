@@ -8,6 +8,5 @@ ui-disabled = "{{ influxdb_influxdb2_ui_disabled }}"
 {% if influxdb_influxdb2_tls_enabled %}
 tls-cert = "{{ influxdb_influxdb2_tls_cert }}"
 tls-key = "{{ influxdb_influxdb2_tls_key }}"
-{% if %}
 {% endif %}
 {{ influxdb_influxdb2_extra_config }}
