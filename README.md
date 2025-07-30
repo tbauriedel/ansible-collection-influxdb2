@@ -57,8 +57,8 @@ Read more about InfluxDBv2 in the [official documentation](https://docs.influxda
 | Rocky        | 9            |
 
 ## Contribution
-Not all components of the go-graphite project are currently managed with that collection.  
+Not all components of InfluxDB are currently managed with that collection.  
 Also not every configuration possibility are implemented for the already existing roles.
 
-New stuff will be added setp by step, wgen the need arises.
-If you want to use this ansible collection but something is missing, you are welcome to create a PR with the necessary settings!
+New stuff will be added step by step, when the need arises.
+If you want to use this ansible collection but something is missing, you are welcome to create an issue or PR with the necessary settings!
