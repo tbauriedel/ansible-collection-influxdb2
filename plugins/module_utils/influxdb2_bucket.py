@@ -7,7 +7,6 @@
 #
 #    http://www.apache.org/licenses/LICENSE-2.0
 
-from re import T
 from influxdb_client import Bucket, BucketRetentionRules, Buckets
 from ansible_collections.tbauriedel.influxdb2.plugins.module_utils.api import (
     Api
@@ -24,7 +23,7 @@ class BucketApi():
         self.desc = desc
         self.org = org
         self.retention = retention
-        self.verify_ssl= verify_ssl
+        self.verify_ssl = verify_ssl
         self.result = result
 
         self.client = Api.new_client(host=host, token=token, verify_ssl=verify_ssl).buckets_api()
@@ -98,7 +97,7 @@ class BucketApi():
         return
 
     def create(self) -> Bucket:
-        orgApi = OrgApi(host=self.host, token=self.token)
+        orgApi = OrgApi(host=self.host, token=self.token, verify_ssl=self.verify_ssl)
         org = orgApi.get_by_name(self.org)
         if org.status != 'inactive':
             return self.client.create_bucket(bucket=Bucket(name=self.name, org_id=org.id, description=self.desc, retention_rules=[BucketRetentionRules(type=self.retention['type'], every_seconds=int(

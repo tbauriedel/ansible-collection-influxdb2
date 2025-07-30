@@ -30,7 +30,7 @@
     desc: "{{ item.desc | default('') }}"
     token: "{{ item.token }}"
     host: "{{ influxdb_influxdb2_host }}"
-    verify_ssl: "{{ item.verify_ssl }}"
+    verify_ssl: "{{ item.verify_ssl | default(true) }}"
   loop: "{{ influxdb_influxdb2_orgs }}"
   when: influxdb_influxdb2_orgs | length > 0
 
