@@ -1,20 +1,20 @@
 ---
 - name: Ensure admin setup token is definded
   ansible.builtin.fail:
-    msg: Variable influxdb_influxdb2_admin_token is not defined in variables
-  when: influxdb_influxdb2_admin_token == ""
+    msg: Variable influxdb2_influxdb2_admin_token is not defined in variables
+  when: influxdb2_influxdb2_admin_token == ""
 
 - name: Ensure InfluxDB is set up
   ansible.builtin.command: influx setup \
-      --host "{{ influxdb_influxdb2_host }}" \
-      --username "{{ influxdb_influxdb2_primary_user.name }}" \
-      --password "{{ influxdb_influxdb2_primary_user.password }}" \
-      --org "{{ influxdb_influxdb2_primary_org }}" \
-      --bucket "{{ influxdb_influxdb2_primary_bucket }}" \
-      --retention "{{ influxdb_influxdb2_retention }}" \
-      --token "{{ influxdb_influxdb2_admin_token }}" \
+      --host "{{ influxdb2_influxdb2_host }}" \
+      --username "{{ influxdb2_influxdb2_primary_user.name }}" \
+      --password "{{ influxdb2_influxdb2_primary_user.password }}" \
+      --org "{{ influxdb2_influxdb2_primary_org }}" \
+      --bucket "{{ influxdb2_influxdb2_primary_bucket }}" \
+      --retention "{{ influxdb2_influxdb2_retention }}" \
+      --token "{{ influxdb2_influxdb2_admin_token }}" \
       --force
-      {% if not (influxdb_influxdb2_tls_verify | default(true) | bool) %}
+      {% if not (influxdb2_influxdb2_tls_verify | default(true) | bool) %}
       --skip-verify
       {% endif %}
   register: _influx_setup
@@ -29,10 +29,10 @@
     state: "{{ item.state | default('present') }}"
     desc: "{{ item.desc | default('') }}"
     token: "{{ item.token }}"
-    host: "{{ influxdb_influxdb2_host }}"
+    host: "{{ influxdb2_influxdb2_host }}"
     verify_ssl: "{{ item.verify_ssl | default(true) }}"
-  loop: "{{ influxdb_influxdb2_orgs }}"
-  when: influxdb_influxdb2_orgs | length > 0
+  loop: "{{ influxdb2_influxdb2_orgs }}"
+  when: influxdb2_influxdb2_orgs | length > 0
 
 - name: Manage buckets
   tbauriedel.influxdb2.influxdb2_bucket:
@@ -41,10 +41,10 @@
     desc: "{{ item.desc | default('') }}"
     org: "{{ item.org }}"
     token: "{{ item.token }}"
-    host: "{{ influxdb_influxdb2_host }}"
+    host: "{{ influxdb2_influxdb2_host }}"
     verify_ssl: "{{ item.verify_ssl | default(true) }}"
     retention:
       type: "{{ item.retention.type }}"
       everySeconds: "{{ item.retention.everySeconds }}"
       shardGroupDurationSeconds: "{{ item.retention.shardGroupDurationSeconds }}"
-  loop: "{{ influxdb_influxdb2_buckets }}"
+  loop: "{{ influxdb2_influxdb2_buckets }}"
