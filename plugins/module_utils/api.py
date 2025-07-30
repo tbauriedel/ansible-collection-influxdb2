@@ -11,5 +11,5 @@
 from influxdb_client import InfluxDBClient
 
 class Api():
-    def new_client(host, token, timeout=10000) -> InfluxDBClient:
-        return InfluxDBClient(host, token, timeout=timeout)
+    def new_client(host, token, verify_ssl, timeout=10000) -> InfluxDBClient:
+        return InfluxDBClient(host, token, timeout=timeout, verify_ssl=verify_ssl)

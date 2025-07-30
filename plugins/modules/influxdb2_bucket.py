@@ -22,7 +22,8 @@ def run_module():
             token=dict(type=str, Required=True, no_log=True),
             host=dict(type=str, Required=True),
             org=dict(type=str, required=False),
-            retention=dict(type=dict, required=False)
+            retention=dict(type=dict, required=False),
+            verify_ssl=dict(type=bool, required=False),
         )
     )
 
@@ -46,7 +47,8 @@ def run_module():
         token=module.params['token'],
         desc=module.params['desc'],
         org=module.params['org'],
-        retention=module.params['retention']
+        retention=module.params['retention'],
+        verify_ssl=module.params['verify_ssl'],
     )
 
     bucket.handle()

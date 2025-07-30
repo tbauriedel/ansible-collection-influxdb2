@@ -16,6 +16,7 @@ As this module uses the InfluxDB2 API you will need to install the InfluxDB2 Pyt
 * `desc`: Description
 * `token`: API token to manage the organization
 * `host`: InfluxDB API Endpoint
+* `verify_ssl`: Verify tls certificates
 * `retention`: Dict of retention rules containing a single object with the following fields
   * `type`: Retention type
   * `everySeconds`: Number of seconds to retain data (0 means forever)

@@ -15,6 +15,7 @@ As this module uses the InfluxDB2 API you will need to install the InfluxDB2 Pyt
 * `desc`: Description
 * `token`: API token to manage the organization
 * `host`: InfluxDB API Endpoint
+* `verify_ssl`: Verify tls certificates
 
 ## Example usage
 

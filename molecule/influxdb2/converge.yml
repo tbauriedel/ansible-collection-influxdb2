@@ -1,12 +1,14 @@
 - name: Converge
   hosts: all
   pre_tasks:
+    # InfluxDB user does not exist on that point. Grant read to others therefore.
     - name: Create influxdb cert dir
       ansible.builtin.file:
         path: "/etc/influxdb/tls"
         state: directory
         owner: root
         group: root
+        mode: "0755"
 
     - name: Generate OpenSSL private key
       community.crypto.openssl_privatekey:
@@ -14,7 +16,7 @@
         size: 4096
         owner: root
         group: root
-        mode: "0640"
+        mode: "0755"
 
     - name: Generate Self Signed OpenSSL certificate
       community.crypto.x509_certificate:
@@ -23,10 +25,12 @@
         provider: selfsigned
         owner: root
         group: root
-        mode: "0640"
+        mode: "0755"
 
   vars:
     influxdb_influxdb2_tls_enabled: true
+    influxdb_influxdb2_tls_verify: false
+    influxdb_influxdb2_host: https://localhost:8086
     influxdb_influxdb2_tls_cert: /etc/influxdb/tls/tls.cert
     influxdb_influxdb2_tls_key: /etc/influxdb/tls/tls.pem
     influxdb_influxdb2_admin_token: 123456789abc!
@@ -34,6 +38,7 @@
       - name: org1
         desc: "This is a description"
         token: "{{ influxdb_influxdb2_admin_token }}"
+        verify_ssl: false
     influxdb_influxdb2_force_pip: true
 
     influxdb_influxdb2_buckets:
@@ -41,6 +46,7 @@
         desc: "This is a description"
         org: org1
         token: "{{ influxdb_influxdb2_admin_token }}"
+        verify_ssl: false
         retention:
           type: 'expire'
           everySeconds: '60000'

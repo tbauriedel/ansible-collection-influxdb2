@@ -20,6 +20,7 @@ At the moment the configuration is very basic. Over time, this role will be expa
 * `influxdb_influxdb2_tls_enabled`: Enable TLS encryption (Default: 'false')
 * `influxdb_influxdb2_tls_cert`: Path to TLS cert
 * `influxdb_influxdb2_tls_key`: Path to TLS key
+* `influxdb_influxdb2_tls_verify`: Verify tls certificates (Default: 'true')
 
 * `influxdb_influxdb2_extra_config`: Additional extra configuration
 
