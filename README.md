@@ -1,4 +1,4 @@
-![Lint](https://github.com/tbauriedel/ansible-collection-influxdb2/actions/workflows/yamllint.yml/badge.svg) ![Build](https://github.com/tbauriedel/ansible-collection-influxdb2/actions/workflows/molecule.yml/badge.svg)
+![Lint](https://github.com/tbauriedel/ansible-collection-influxdb2/actions/workflows/lint.yml/badge.svg) ![Build](https://github.com/tbauriedel/ansible-collection-influxdb2/actions/workflows/molecule.yml/badge.svg)
 
 # ansible-collection-influxdb2
 
