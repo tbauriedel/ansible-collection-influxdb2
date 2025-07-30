@@ -6,12 +6,12 @@
 
 - name: Apt - Add repositiory key
   ansible.builtin.get_url:
-    url: "{{ influxdb_repos_key_url }}"
+    url: "{{ influxdb2_repos_key_url }}"
     dest: /etc/apt/trusted.gpg.d/influx.asc
     mode: '0644'
     force: true
 
 - name: Apt - Add repository to list
   ansible.builtin.apt_repository:
-    repo: "{{ influxdb_repos_stable }}"
+    repo: "{{ influxdb2_repos_stable }}"
     state: present

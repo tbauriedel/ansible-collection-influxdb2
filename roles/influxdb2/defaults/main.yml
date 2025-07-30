@@ -1,31 +1,31 @@
 ---
-influxdb_influxdb2_packages:
+influxdb2_influxdb2_packages:
   - influxdb2
   - influxdb2-cli
 
-influxdb_influxdb2_bolt_path: /var/lib/influxdb/influxd.bolt
-influxdb_influxdb2_engine_path: /var/lib/influxdb/engine
-influxdb_influxdb2_bind_address: "0.0.0.0:8086"
-influxdb_influxdb2_log_level: info
-influxdb_influxdb2_ui_disabled: false
+influxdb2_influxdb2_bolt_path: /var/lib/influxdb/influxd.bolt
+influxdb2_influxdb2_engine_path: /var/lib/influxdb/engine
+influxdb2_influxdb2_bind_address: "0.0.0.0:8086"
+influxdb2_influxdb2_log_level: info
+influxdb2_influxdb2_ui_disabled: false
 
-influxdb_influxdb2_tls_enabled: false
-influxdb_influxdb2_tls_cert: ""
-influxdb_influxdb2_tls_key: ""
-influxdb_influxdb2_tls_verify: true
+influxdb2_influxdb2_tls_enabled: false
+influxdb2_influxdb2_tls_cert: ""
+influxdb2_influxdb2_tls_key: ""
+influxdb2_influxdb2_tls_verify: true
 
-influxdb_influxdb2_extra_config: ""
+influxdb2_influxdb2_extra_config: ""
 
-influxdb_influxdb2_host: http://localhost:8086
-influxdb_influxdb2_primary_user:
+influxdb2_influxdb2_host: http://localhost:8086
+influxdb2_influxdb2_primary_user:
   name: admin
   password: ChangeMe123!
-influxdb_influxdb2_primary_org: default
-influxdb_influxdb2_primary_bucket: default
-influxdb_influxdb2_admin_token: "Random123ChangeMe!"
-influxdb_influxdb2_retention: 0
+influxdb2_influxdb2_primary_org: default
+influxdb2_influxdb2_primary_bucket: default
+influxdb2_influxdb2_admin_token: "Random123ChangeMe!"
+influxdb2_influxdb2_retention: 0
 
-influxdb_influxdb2_buckets: []
-influxdb_influxdb2_orgs: []
+influxdb2_influxdb2_buckets: []
+influxdb2_influxdb2_orgs: []
 
-influxdb_influxdb2_force_pip: false
+influxdb2_influxdb2_force_pip: false

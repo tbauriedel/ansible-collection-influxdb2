@@ -8,7 +8,7 @@
 
 - name: Install influxdb-client via block for rescue
   when:
-    - not influxdb_influxdb2_force_pip | bool
+    - not influxdb2_influxdb2_force_pip | bool
   block:
     - name: Install influxdb-client for python
       ansible.builtin.pip:
@@ -17,7 +17,7 @@
   rescue:
     - name: Fail with error message
       ansible.builtin.fail:
-        msg: NOTE You can force this installation. See README about variable influxdb_influxdb2_force_pip
+        msg: NOTE You can force this installation. See README about variable influxdb2_influxdb2_force_pip
 
 - name: Install influxb-client for python (forced)
   ansible.builtin.pip:
@@ -25,20 +25,14 @@
     state: present
     break_system_packages: true
   when:
-    - influxdb_influxdb2_force_pip | bool
+    - influxdb2_influxdb2_force_pip | bool
 
 - name: Install InfluxDB
   ansible.builtin.package:
     name: "{{ item }}"
     state: present
-  loop: "{{ influxdb_influxdb2_packages }}"
+  loop: "{{ influxdb2_influxdb2_packages }}"
   notify: Restart InfluxDB
-
-#- name: Ensure config dir exists
-#  ansible.builtin.file:
-#    owner: influxdb
-#    group: influxdb
-#    mode: "0644"
 
 - name: Ensure startup config is placed
   ansible.builtin.template:

@@ -28,24 +28,24 @@
         mode: "0755"
 
   vars:
-    influxdb_influxdb2_tls_enabled: true
-    influxdb_influxdb2_tls_verify: false
-    influxdb_influxdb2_host: https://localhost:8086
-    influxdb_influxdb2_tls_cert: /etc/influxdb/tls/tls.cert
-    influxdb_influxdb2_tls_key: /etc/influxdb/tls/tls.pem
-    influxdb_influxdb2_admin_token: 123456789abc!
-    influxdb_influxdb2_orgs:
+    influxdb2_influxdb2_tls_enabled: true
+    influxdb2_influxdb2_tls_verify: false
+    influxdb2_influxdb2_host: https://localhost:8086
+    influxdb2_influxdb2_tls_cert: /etc/influxdb/tls/tls.cert
+    influxdb2_influxdb2_tls_key: /etc/influxdb/tls/tls.pem
+    influxdb2_influxdb2_admin_token: 123456789abc!
+    influxdb2_influxdb2_orgs:
       - name: org1
         desc: "This is a description"
-        token: "{{ influxdb_influxdb2_admin_token }}"
+        token: "{{ influxdb2_influxdb2_admin_token }}"
         verify_ssl: false
-    influxdb_influxdb2_force_pip: true
+    influxdb2_influxdb2_force_pip: true
 
-    influxdb_influxdb2_buckets:
+    influxdb2_influxdb2_buckets:
       - name: bucket-1
         desc: "This is a description"
         org: org1
-        token: "{{ influxdb_influxdb2_admin_token }}"
+        token: "{{ influxdb2_influxdb2_admin_token }}"
         verify_ssl: false
         retention:
           type: 'expire'

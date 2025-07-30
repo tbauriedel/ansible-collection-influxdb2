@@ -1,13 +1,13 @@
 ---
 name: Lint
-
 on:
   push:
-    branches:
+    tags:
       - "*"
+    branches:
+      - main
   pull_request:
-    branches:
-      - "*"
+  merge_group:
 
 jobs:
   yamllint:
@@ -18,7 +18,7 @@ jobs:
       - name: Set up Python 3.
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: "3.x"
 
       - name: Install test dependencies.
         run: |
@@ -31,4 +31,4 @@ jobs:
 
       - name: ansible-lint
         run: |
-          ansible-lint .
+          ansible-lint roles/*
