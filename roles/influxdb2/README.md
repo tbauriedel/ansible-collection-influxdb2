@@ -7,10 +7,22 @@ At the moment the configuration is very basic. Over time, this role will be expa
 
 ## Variables
 
+**Installation**
+* `influxdb_influxdb2_force_pip`: Pip won't let you install Python modules if there is a package managed Python installation. Since the required modules are not available on all supported distributions you can override this behaviour by setting this variable to `true`. (Default: `false`)
+
 **Configuration:**
-* `influxdb_influxdb2_bolt_path`: InfluxDB bolt-path
-* `influxdb_influxdb2_engine_path`: InfluxDB engine-path
-* `influxdb_influxdb2_extra_config`: Some extra configuration
+* `influxdb_influxdb2_bolt_path`: InfluxDB bolt-path (default: '/var/lib/influxdb/influxd.bolt')
+* `influxdb_influxdb2_engine_path`: InfluxDB engine-path (default: '/var/lib/influxdb/engine')
+* `influxdb_influxdb2_bind_address`: HTTP bind addressn(default: '0.0.0.0:8086)
+* `influxdb_influxdb2_log_level`: Log level (default: 'info')
+* `influxdb_influxdb2_ui_disabled`: Disable InfluxDB user interface (Default: false)
+
+* `influxdb_influxdb2_tls_enabled`: Enable TLS encryption (Default: 'false')
+* `influxdb_influxdb2_tls_cert`: Path to TLS cert
+* `influxdb_influxdb2_tls_key`: Path to TLS key
+* `influxdb_influxdb2_tls_verify`: Verify tls certificates (Default: 'true')
+
+* `influxdb_influxdb2_extra_config`: Additional extra configuration
 
 **Setup:**
 * `influxdb_influxdb2_host`: HTTP address of InfluxDB (default: 'http://localhost:8086')
@@ -20,7 +32,6 @@ At the moment the configuration is very basic. Over time, this role will be expa
 * `influxdb_influxdb2_primary_bucket`: Primary bucket (default: 'default')
 * `influxdb_influxdb2_retention`: Retention for primary bucket (default: '0')
 * `influxdb_influxdb2_admin_token`: Admin API token created in the setup (default: 'Random123ChangeMe!')
-* `influxdb_influxdb2_force_pip`: Pip won't let you install Python modules if there is a package managed Python installation. Since the required modules are not available on all supported distributions you can override this behaviour by setting this variable to `true`. (Default: `false`)
 
 **Organizations**
 * `influxdb_influxdb2_orgs`: List of organizations to manage

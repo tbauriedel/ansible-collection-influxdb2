@@ -34,13 +34,19 @@
   loop: "{{ influxdb_influxdb2_packages }}"
   notify: Restart InfluxDB
 
+#- name: Ensure config dir exists
+#  ansible.builtin.file:
+#    owner: influxdb
+#    group: influxdb
+#    mode: "0644"
+
 - name: Ensure startup config is placed
   ansible.builtin.template:
     src: config.toml.j2
     dest: /etc/influxdb/config.toml
     mode: 0644
-    owner: root
-    group: root
+    owner: influxdb
+    group: influxdb
 
 - name: Ensure InfluxDB is started
   ansible.builtin.service:

@@ -6,3 +6,14 @@
       ansible.builtin.service:
         name: influxdb
         state: started
+
+    - name: Ensure influxdb api is reachable
+      ansible.builtin.uri:
+        url: "https://localhost:8086/health"
+        status_code: 200
+        validate_certs: false
+      register: _api_output
+
+    - name: Debug api health status
+      ansible.builtin.debug:
+        var: _api_output

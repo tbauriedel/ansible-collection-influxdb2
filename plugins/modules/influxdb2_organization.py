@@ -17,7 +17,8 @@ def run_module():
             state=dict(type=str, required=True),
             desc=dict(type=str, required=False),
             host=dict(type=str, required=True),
-            token=dict(type=str, required=True, no_log=True)
+            verify_ssl=dict(type=bool, required=False),
+            token=dict(type=str, required=True, no_log=True),
         )
     )
 
@@ -39,6 +40,7 @@ def run_module():
         desc=module.params['desc'],
         name=module.params['name'],
         state=module.params['state'],
+        verify_ssl=module.params['verify_ssl'],
     )
 
     org.handle()

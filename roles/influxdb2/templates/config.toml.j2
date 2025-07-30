@@ -2,5 +2,11 @@
 
 bolt-path = "{{ influxdb_influxdb2_bolt_path }}"
 engine-path = "{{ influxdb_influxdb2_engine_path }}"
-
+http-bind-address = "{{ influxdb_influxdb2_bind_address }}"
+log-level = "{{ influxdb_influxdb2_log_level }}"
+ui-disabled = "{{ influxdb_influxdb2_ui_disabled }}"
+{% if influxdb_influxdb2_tls_enabled %}
+tls-cert = "{{ influxdb_influxdb2_tls_cert }}"
+tls-key = "{{ influxdb_influxdb2_tls_key }}"
+{% endif %}
 {{ influxdb_influxdb2_extra_config }}

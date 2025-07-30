@@ -1,6 +1,6 @@
 # !/usr/bin/python3
 
-# Copyright (c) 2024, Tobias Bauriedel <tobias.bauriedel@netways.de>
+# Copyright (c) 2024, Tobias Bauriedel <tobias@bauriedel.de>
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -15,14 +15,14 @@ from ansible_collections.tbauriedel.influxdb2.plugins.module_utils.api import (
 
 
 class OrgApi():
-    def __init__(self, host, token, name='', state='', desc='', result=dict):
+    def __init__(self, host, token, name='', state='', desc='', verify_ssl=True, result=dict):
         self.name = name
         self.state = state
         self.desc = desc
         self.result = result
+        self.verify_ssl = verify_ssl
 
-        self.client = Api.new_client(
-            host=host, token=token).organizations_api()
+        self.client = Api.new_client(host=host, token=token, verify_ssl=verify_ssl).organizations_api()
 
     def return_result(self) -> dict:
         return self.result

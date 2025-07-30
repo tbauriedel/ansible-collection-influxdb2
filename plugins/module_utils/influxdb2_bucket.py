@@ -1,13 +1,12 @@
 # !/usr/bin/python3
 
-# Copyright (c) 2024, Tobias Bauriedel <tobias.bauriedel@netways.de>
+# Copyright (c) 2024, Tobias Bauriedel <tobias@bauriedel.de>
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
 #    http://www.apache.org/licenses/LICENSE-2.0
 
-from re import T
 from influxdb_client import Bucket, BucketRetentionRules, Buckets
 from ansible_collections.tbauriedel.influxdb2.plugins.module_utils.api import (
     Api
@@ -18,15 +17,16 @@ from ansible_collections.tbauriedel.influxdb2.plugins.module_utils.influxdb2_org
 
 
 class BucketApi():
-    def __init__(self, name, state, desc, result, host, token, org, retention):
+    def __init__(self, name, state, desc, host, token, org, retention, verify_ssl=True, result=dict):
         self.name = name
         self.state = state
         self.desc = desc
         self.org = org
         self.retention = retention
+        self.verify_ssl = verify_ssl
         self.result = result
 
-        self.client = Api.new_client(host=host, token=token).buckets_api()
+        self.client = Api.new_client(host=host, token=token, verify_ssl=verify_ssl).buckets_api()
 
         self.host = host
         self.token = token
@@ -97,7 +97,7 @@ class BucketApi():
         return
 
     def create(self) -> Bucket:
-        orgApi = OrgApi(host=self.host, token=self.token)
+        orgApi = OrgApi(host=self.host, token=self.token, verify_ssl=self.verify_ssl)
         org = orgApi.get_by_name(self.org)
         if org.status != 'inactive':
             return self.client.create_bucket(bucket=Bucket(name=self.name, org_id=org.id, description=self.desc, retention_rules=[BucketRetentionRules(type=self.retention['type'], every_seconds=int(
