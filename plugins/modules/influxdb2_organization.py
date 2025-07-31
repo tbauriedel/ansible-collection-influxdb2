@@ -1,5 +1,13 @@
-#!/usr/bin/python3
-# pylint: disable=missing-module-docstring
+# !/usr/bin/python3
+
+# Copyright (c) 2024, Tobias Bauriedel <tobias@bauriedel.de>
+# Licensed under the Apache License, Version 2.0 (the "License");
+# You may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+
+# # pylint: disable=missing-module-docstring
 
 from ansible.module_utils.basic import (
     AnsibleModule,

@@ -48,3 +48,15 @@
       everySeconds: "{{ item.retention.everySeconds }}"
       shardGroupDurationSeconds: "{{ item.retention.shardGroupDurationSeconds }}"
   loop: "{{ influxdb2_influxdb2_buckets }}"
+
+- name: Manage auth tokens
+  tbauriedel.influxdb2.influxdb2_auth:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+    desc: "{{ item.desc | default(omit) }}"
+    org: "{{ item.org }}"
+    token: "{{ influxdb2_influxdb2_admin_token }}"
+    host: "{{ influxdb2_influxdb2_host }}"
+    verify_ssl: "{{ item.verify_ssl | default(true) }}"
+    permissions: "{{ item.permissions }}"
+  loop: "{{ influxdb2_influxdb2_tokens }}"

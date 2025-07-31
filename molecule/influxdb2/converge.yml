@@ -52,6 +52,24 @@
           everySeconds: '60000'
           shardGroupDurationSeconds: '7600'
 
+    influxdb2_influxdb2_tokens:
+      - name: token-1
+        state: present
+        org: org1
+        token: "{{ influxdb2_influxdb2_admin_token }}"
+        verify_ssl: false
+        permissions:
+          - buckets:
+              - action: read
+                bucket: bucket-1
+              - action: write
+                bucket: bucket-1
+          - dashboards:
+              - action: read
+          - variables:
+              - action: read
+              - action: write
+
   collections:
     - tbauriedel.influxdb2
 
