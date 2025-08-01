@@ -27,5 +27,6 @@ influxdb2_influxdb2_retention: 0
 
 influxdb2_influxdb2_buckets: []
 influxdb2_influxdb2_orgs: []
+influxdb2_influxdb2_tokens: []
 
 influxdb2_influxdb2_force_pip: false

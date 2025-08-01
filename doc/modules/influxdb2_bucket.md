@@ -1,4 +1,4 @@
-# Ansible module: influxdb_bucket
+# Ansible module: influxdb2_bucket
 
 This module creates, updates and deletes buckets from your InfluxDB2.
 

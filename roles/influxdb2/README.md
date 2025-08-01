@@ -39,6 +39,8 @@ At the moment the configuration is very basic. Over time, this role will be expa
   * `state`: State ('present' or 'absent')
   * `desc`: Description
   * `token`: API token to manage the organization
+  * `verify_ssl`: Verify ssl certificates (Default: `true`)
+  * `host`: InfluxDB Host to use in API call
 
 **Buckets**
 * `influxdb_influxdb2_buckets`: List of buckets to manage
@@ -47,10 +49,47 @@ At the moment the configuration is very basic. Over time, this role will be expa
   * `desc`: Description
   * `org`: InfluxDB organization name
   * `token`: API token to manage the bucket
+  * `verify_ssl`: Verify ssl certificates (Default: `true`)
+  * `host`: InfluxDB Host to use in API call
   * `retention`: Dict of retention rules containing a single object with the following fields
     * `type`: expire
     * `everySeconds`: Number of seconds to retain data (0 means forever)
     * `shardGroupDurationSeconds`: Number of seconds to retain shard groups (**Caution**: The [default values](https://docs.influxdata.com/influxdb/v2/reference/internals/shards/#shard-group-duration) also correspond to the necessary minimum!)
+
+**Access Tokens**
+* `influxdb2_influxdb2_tokens`:
+  * `name`: Name of token. Only used inside of the module to identify the token (saved in description)
+  * `state`: State of the token ('present' or 'absent')
+  * `desc`: Description (Only use in case you dont want to manage the token again after creation. Is used to identify it again)
+  * `org`: Organization name
+  * `token`: API token to manage the token
+  * `verify_ssl`: Verify ssl certificates (Default: `true`)
+  * `host`: InfluxDB Host to use in API call
+  * `permissions`: **List** of permissions. An example can be found below.
+
+```yaml
+permissions:
+  - buckets: # resource
+      - action: read # action
+        bucket: my-bucket # bucket name (only needed for the bucket resource)
+  - dashboards:
+      - action: read
+  - variables:
+      - action: read
+      - action: write
+  - ...
+```
+
+Supported resources:  
+- buckets (requires 'action' and 'bucket' name), dashboards, variables, tasks, checks, notifications, orgs, authorizations, labels, secrets, views, documents
+
+Supported actions:  
+- read, write
+
+> Note!
+> If an existing token’s permissions differ from the desired state, the module deletes and recreates the token under the hood.
+> This causes the actual token string to change. Plan accordingly if you store tokens externally or pass them to applications.
+
 
 Defaults can be viewed in vars/defaults.yml
 

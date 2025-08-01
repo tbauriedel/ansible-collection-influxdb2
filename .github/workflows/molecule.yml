@@ -20,7 +20,7 @@ jobs:
     strategy:
       matrix:
         distro: ["rockylinux9", "ubuntu2204", "debian12"]
-        scenario: ["repos", "influxdb2"]
+        scenario: ["repos", "influxdb2", "modules"]
 
     steps:
       - name: Checkout code

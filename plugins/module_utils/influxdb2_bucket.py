@@ -116,3 +116,9 @@ class BucketApi():
 
     def get_by_id(self, id) -> Bucket:
         return self.client.find_bucket_by_id(id=id)
+
+    def get_by_name(self, name):
+        for bucket in self.get_all().buckets:
+            if bucket.name == name:
+                return self.get_by_id(bucket.id)
+        return None
