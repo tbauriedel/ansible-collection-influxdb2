@@ -1,0 +1,63 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Ensure jq is installed
+      ansible.builtin.package:
+        name: jq
+        state: present
+      changed_when: false
+
+    - name: Ensure service is running
+      ansible.builtin.service:
+        name: influxdb
+        state: started
+
+    - name: Ensure influxdb api is reachable
+      ansible.builtin.uri:
+        url: "http://localhost:8086/health"
+        status_code: 200
+        validate_certs: false
+      register: _api_output
+
+    - name: Fetch created org id
+      ansible.builtin.shell: >
+        influx org list --token '123456789abc!' --json
+        | jq '.[]
+        | select(.name == "org1")'
+        | jq .id
+      register: _org_id
+      changed_when: false
+
+    - name: Ensure org is created
+      ansible.builtin.assert:
+        that: _org_id.stdout | length > 0
+        fail_msg: Cant find created org
+
+    - name: Fetch created bucket id
+      ansible.builtin.shell: >
+        influx bucket list --org org1 --token '123456789abc!' --json
+        | jq '.[]
+        | select(.name == "bucket-1")'
+        | jq .id
+      register: _bucket_id
+      changed_when: false
+
+    - name: Ensure created bucket exists
+      ansible.builtin.assert:
+        that: _bucket_id.stdout | length > 0
+        fail_msg: Cant find created bucket in org1
+
+    - name: Fetch created auth tokens
+      ansible.builtin.shell: >
+        influx auth list --token '123456789abc!' --json
+        | jq '.[]
+        | select(.description == "token-1")'
+        | jq .status
+      register: _auth_token_status
+      changed_when: false
+
+    - name: Ensure created auth token exists
+      ansible.builtin.assert:
+        that: _auth_token_status.stdout == "\"active\""
+        fail_msg: Created access token does not exist or is invalid

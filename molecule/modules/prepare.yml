@@ -1,0 +1,11 @@
+---
+- name: Prepare
+  hosts: all
+  tasks:
+    - name: Ensure dependencies are installed
+      ansible.builtin.pip:
+        name: "{{ item }}"
+      loop:
+        - requests
+        - influxdb_client
+        - jq # needed for verify.yml

@@ -17,6 +17,7 @@ Read more about InfluxDBv2 in the [official documentation](https://docs.influxda
 
 * [Module: influxdb2_organization](doc/modules/influxdb2_organization.py): Create, update and delete InfluxDBv2 organizations
 * [Module: influxdb2_bucket](doc/modules/influxdb2_bucket.md.py): Create, update and delete InfluxDBv2 buckets
+* [Module: influxdb2_auth](doc/modules/influxdb2_auth.md): Create, update (recreate) and delete InfluxDBv2 access tokens
 
 ## Example
 
